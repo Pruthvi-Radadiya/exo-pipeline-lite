@@ -4,6 +4,8 @@ A small, local data pipeline for **synthetic exoskeleton recordings**. It simula
 
 > **Honest summary:** all data is synthetic, and the signal set (trunk IMU, cable tension and travel, forearm angles) is my assumption, based on public information about cable-driven exosuits. It is not the data format of any real product. I built this to practice multi-sensor data engineering end to end. Every number below comes from a command in this repository.
 
+![tests](https://github.com/Pruthvi-Radadiya/exo-pipeline-lite/actions/workflows/tests.yml/badge.svg)
+
 
 ## Pipeline
 
