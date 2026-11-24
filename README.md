@@ -52,6 +52,32 @@ pytest -q
 
 Python 3.10 or newer. The pseudonym key is a secret: it is never stored in the repository.
 
+## Running with Docker & Apache Airflow
+
+To run the pipeline as a fully orchestrated, containerized workflow with retries and web UI monitoring:
+
+```bash
+# 1. Create .env with your user ID and secret key
+echo "AIRFLOW_UID=$(id -u)" > .env
+echo 'EXO_PSEUDONYM_KEY="a-secret-passphrase-with-at-least-16-chars"' >> .env
+
+# 2. Build the custom Airflow image (includes numpy, pandas, pyarrow, mcap)
+docker compose build
+
+# 3. Start the Airflow cluster in the background
+docker compose up -d
+```
+
+Open **`http://localhost:8080`** in your browser:
+* **Username:** `airflow`
+* **Password:** `airflow`
+* Trigger the **`exo_pipeline`** DAG to observe the pipeline execution, automated task retries (`check_export_storage`), and dataset generation.
+
+To stop all services:
+```bash
+docker compose down
+```
+
 ## Results
 
 20 synthetic recordings (seed 42), scored against the ground truth that the generator saved:
@@ -66,6 +92,16 @@ Python 3.10 or newer. The pseudonym key is a secret: it is never stored in the r
 | Export | 236 episodes and 79,869 frames in 2 Parquet files (4.7 MB). Two exports give identical data files | `python -m exo.export` |
 | Spark | same statistics as pandas. Pandas was faster at this size (0.08 s against 5 to 14 s) | `python -m exo.spark_stats --compare` |
 | Tests | 58 passed, 1 skipped (the Airflow DAG test runs only where Airflow is installed) | `pytest -q` |
+
+## Visualizations
+
+### Quality Checks & Fault Detection
+Detected injected faults (spikes, dropouts, and stuck sensors) across unsynchronized channels:
+![Quality Checks](docs/rec_007_qc.png)
+
+### Episode Segmentation
+Continuous sensor data segmented into discrete robot learning episodes based on cable travel:
+![Episode Segmentation](docs/rec_000_episodes.png)
 
 
 ## What went wrong along the way
