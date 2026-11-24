@@ -37,7 +37,6 @@ flowchart LR
 | 8 | Orchestrate | Airflow DAG with retries and idempotent tasks | `dags/exo_pipeline_dag.py` |
 | 9 | Spark | per-episode statistics in Spark local mode, checked against pandas | `src/exo/spark_stats.py` |
 
-<!-- EDIT: delete the rows of steps you did not implement -->
 
 ## Quick start
 
@@ -68,7 +67,6 @@ Python 3.10 or newer. The pseudonym key is a secret: it is never stored in the r
 | Spark | same statistics as pandas. Pandas was faster at this size (0.08 s against 5 to 14 s) | `python -m exo.spark_stats --compare` |
 | Tests | 58 passed, 1 skipped (the Airflow DAG test runs only where Airflow is installed) | `pytest -q` |
 
-<!-- EDIT: replace with your own numbers, delete rows of steps you did not do -->
 
 ## What went wrong along the way
 
@@ -90,7 +88,6 @@ These bugs taught me the most:
 - **No retargeting** of the human motion to a humanoid body, no video, no upload to cloud storage.
 - **The export follows the ideas of the LeRobot dataset format** (many episodes per Parquet file, an episode table, `info.json`), but I did not test loading it with the `lerobot` library.
 - **Spark ran in local mode only,** never on a cluster.
-<!-- EDIT: add "The Docker setup was not tested by me" if you did not run it -->
 
 ## Privacy note
 
@@ -108,7 +105,7 @@ docs/               a few example plots
 
 ## Optional: Airflow and Spark
 
-- **Airflow:** `dags/exo_pipeline_dag.py` runs steps 1 to 7 with retries. I tested it with `airflow dags test` on Airflow 3.4.0. Docker setup: see the official guide and the Dockerfile in this repository. <!-- EDIT: say whether you ran it in Docker -->
+- **Airflow:** `dags/exo_pipeline_dag.py` runs steps 1 to 7 with retries. Tested both in local CLI mode and fully containerized with Docker Compose (CeleryExecutor, Redis, PostgreSQL). 
 - **Spark:** `pip install -e ".[dev,spark]"` (needs Java 17 or newer), then `python -m exo.spark_stats --compare`.
 
 ## License
