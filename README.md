@@ -95,12 +95,16 @@ docker compose down
 
 ## Visualizations
 
-### Quality Checks & Fault Detection
-Detected injected faults (spikes, dropouts, and stuck sensors) across unsynchronized channels:
+### 1. Clock Synchronization & Drift Fit (Step 3)
+Sliding cross-correlation finds time offsets; linear regression fits clock drift:
+![Clock Synchronization](docs/rec_007_sync.png)
+
+### 2. Quality Checks & Fault Detection (Step 4)
+Automated detection of injected spikes, dropouts, and stuck sensors:
 ![Quality Checks](docs/rec_007_qc.png)
 
-### Episode Segmentation
-Continuous sensor data segmented into discrete robot learning episodes based on cable travel:
+### 3. Episode Segmentation (Step 5)
+Continuous sensor streams segmented into discrete robot learning episodes:
 ![Episode Segmentation](docs/rec_000_episodes.png)
 
 
